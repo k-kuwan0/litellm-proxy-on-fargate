@@ -1,3 +1,7 @@
+このリポジトリは下記の記事の実践に使用した内容です。  
+詳細はそちらをご覧ください。  
+[LiteLLM ProxyをECS Fargateにデプロイする構成をTerraform + ecspressoで組んでみた](https://dev.classmethod.jp/articles/litellm-proxy-on-fargate/)
+
 # litellm-proxy-on-fargate
 
 LiteLLM Proxy を ECS Fargate に乗せる構成のサンプル。LiteLLM 公式 / AWS Solutions Library のリファレンス実装をベースに、本番運用を想定したベストプラクティス（private VPC + VPC Endpoint / Secrets Manager / bastion 経由 SSM アクセス / ECS Exec / S3 リクエストログ / Bedrock 最小権限など）を反映している。Terraform で土台を作り、ecspresso で ECS Service / TaskDefinition のデプロイを回す。
