@@ -1,0 +1,78 @@
+# ==============================
+# Claude Code (個人用設定・ローカルメモ)
+# ref: https://code.claude.com/docs/en/settings
+# ==============================
+.claude/settings.local.json
+CLAUDE.local.md
+.claude/worktree/
+
+# ==============================
+# macOS
+# ref: https://github.com/github/gitignore/blob/main/Global/macOS.gitignore
+# ==============================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ==============================
+# Windows
+# ref: https://github.com/github/gitignore/blob/main/Global/Windows.gitignore
+# ==============================
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.stackdump
+*.lnk
+
+# ==============================
+# Linux
+# ref: https://github.com/github/gitignore/blob/main/Global/Linux.gitignore
+# ==============================
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==============================
+# Visual Studio Code
+# ref: https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
+# ==============================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+*.code-workspace
+*.vsix
+
+# ==============================
+# JetBrains IDEs
+# ref: https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+# ==============================
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+*.iws
+out/
+
+# ==============================
+# Vim
+# ref: https://github.com/github/gitignore/blob/main/Global/Vim.gitignore
+# ==============================
+[._]*.s[a-v][a-z]
+!*.svg
+[._]*.sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+[._]*.un~

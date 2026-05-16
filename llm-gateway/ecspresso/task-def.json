@@ -1,0 +1,46 @@
+{
+  "family": "litellm",
+  "cpu": "4096",
+  "memory": "8192",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "runtimePlatform": {
+    "cpuArchitecture": "ARM64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "executionRoleArn": "{{ tfstate `output.execution_role_arn` }}",
+  "taskRoleArn": "{{ tfstate `output.task_role_arn` }}",
+  "containerDefinitions": [
+    {
+      "name": "litellm",
+      "image": "{{ must_env `IMAGE_TAG` }}",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 4000, "protocol": "tcp" }
+      ],
+      "environment": [
+        { "name": "AWS_DEFAULT_REGION", "value": "{{ tfstate `output.aws_region` }}" },
+        { "name": "DATABASE_HOST", "value": "{{ tfstate `output.rds_endpoint` }}" },
+        { "name": "DATABASE_PORT", "value": "{{ tfstate `output.rds_port` }}" },
+        { "name": "DATABASE_NAME", "value": "{{ tfstate `output.db_name` }}" },
+        { "name": "S3_LOG_BUCKET_NAME", "value": "{{ tfstate `output.s3_log_bucket_name` }}" },
+        { "name": "UI_USERNAME", "value": "admin" }
+      ],
+      "secrets": [
+        { "name": "DATABASE_USERNAME", "valueFrom": "{{ tfstate `output.rds_master_user_secret_arn` }}:username::" },
+        { "name": "DATABASE_PASSWORD", "valueFrom": "{{ tfstate `output.rds_master_user_secret_arn` }}:password::" },
+        { "name": "LITELLM_MASTER_KEY", "valueFrom": "{{ tfstate `output.master_key_secret_arn` }}" },
+        { "name": "LITELLM_SALT_KEY", "valueFrom": "{{ tfstate `output.salt_key_secret_arn` }}" },
+        { "name": "UI_PASSWORD", "valueFrom": "{{ tfstate `output.master_key_secret_arn` }}" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "{{ tfstate `output.log_group_name_app` }}",
+          "awslogs-region": "{{ tfstate `output.aws_region` }}",
+          "awslogs-stream-prefix": "litellm"
+        }
+      }
+    }
+  ]
+}

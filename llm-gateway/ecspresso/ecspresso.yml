@@ -1,0 +1,11 @@
+region: ap-northeast-1
+cluster: litellm-proxy-dev
+service: litellm
+service_definition: service-def.json
+task_definition: task-def.json
+timeout: 10m0s
+
+plugins:
+  - name: tfstate
+    config:
+      url: s3://litellm-proxy-tfstate/terraform/dev/terraform.tfstate

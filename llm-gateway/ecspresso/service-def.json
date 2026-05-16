@@ -1,0 +1,35 @@
+{
+  "launchType": "FARGATE",
+  "platformVersion": "LATEST",
+  "desiredCount": 1,
+  "enableExecuteCommand": true,
+  "propagateTags": "SERVICE",
+  "deploymentConfiguration": {
+    "minimumHealthyPercent": 100,
+    "maximumPercent": 200,
+    "deploymentCircuitBreaker": {
+      "enable": true,
+      "rollback": true
+    }
+  },
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "assignPublicIp": "DISABLED",
+      "subnets": [
+        "{{ tfstate `output.private_subnet_id_a` }}",
+        "{{ tfstate `output.private_subnet_id_c` }}"
+      ],
+      "securityGroups": [
+        "{{ tfstate `output.service_security_group_id` }}"
+      ]
+    }
+  },
+  "loadBalancers": [
+    {
+      "targetGroupArn": "{{ tfstate `output.target_group_arn` }}",
+      "containerName": "litellm",
+      "containerPort": 4000
+    }
+  ],
+  "healthCheckGracePeriodSeconds": 300
+}
