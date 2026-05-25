@@ -23,7 +23,6 @@ data "aws_iam_policy_document" "execution_secrets" {
   statement {
     actions = ["secretsmanager:GetSecretValue"]
     resources = [
-      var.rds_master_user_secret_arn,
       var.master_key_secret_arn,
       var.salt_key_secret_arn,
     ]
@@ -40,6 +39,10 @@ resource "aws_iam_role" "task" {
   name               = "${var.project_name}-task"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_assume.json
 }
+
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
 
 data "aws_iam_policy_document" "task" {
   statement {
@@ -70,6 +73,16 @@ data "aws_iam_policy_document" "task" {
       "ssmmessages:OpenDataChannel",
     ]
     resources = ["*"]
+  }
+
+  # IAM database authentication. db_app_username に対する IAM トークン署名のみ許可。
+  # PostgreSQL 側でも CREATE USER + GRANT rds_iam が必要 (詳細は docs/iam-db-auth.md)。
+  statement {
+    sid     = "RdsIamConnect"
+    actions = ["rds-db:connect"]
+    resources = [
+      "arn:aws:rds-db:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dbuser:${var.rds_resource_id}/${var.db_app_username}",
+    ]
   }
 }
 

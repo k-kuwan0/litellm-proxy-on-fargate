@@ -74,6 +74,18 @@ output "rds_master_user_secret_arn" {
   value = module.data.rds_master_user_secret_arn
 }
 
+output "rds_resource_id" {
+  value = module.data.rds_resource_id
+}
+
+output "db_master_username" {
+  value = local.db_master_username
+}
+
+output "db_app_username" {
+  value = local.db_app_username
+}
+
 output "master_key_secret_arn" {
   value = module.data.master_key_secret_arn
 }

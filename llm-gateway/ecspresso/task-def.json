@@ -20,15 +20,17 @@
       ],
       "environment": [
         { "name": "AWS_DEFAULT_REGION", "value": "{{ tfstate `output.aws_region` }}" },
+        { "name": "AWS_REGION", "value": "{{ tfstate `output.aws_region` }}" },
+        { "name": "AWS_REGION_NAME", "value": "{{ tfstate `output.aws_region` }}" },
         { "name": "DATABASE_HOST", "value": "{{ tfstate `output.rds_endpoint` }}" },
         { "name": "DATABASE_PORT", "value": "{{ tfstate `output.rds_port` }}" },
         { "name": "DATABASE_NAME", "value": "{{ tfstate `output.db_name` }}" },
+        { "name": "DATABASE_USER", "value": "{{ tfstate `output.db_app_username` }}" },
+        { "name": "IAM_TOKEN_DB_AUTH", "value": "true" },
         { "name": "S3_LOG_BUCKET_NAME", "value": "{{ tfstate `output.s3_log_bucket_name` }}" },
         { "name": "UI_USERNAME", "value": "admin" }
       ],
       "secrets": [
-        { "name": "DATABASE_USERNAME", "valueFrom": "{{ tfstate `output.rds_master_user_secret_arn` }}:username::" },
-        { "name": "DATABASE_PASSWORD", "valueFrom": "{{ tfstate `output.rds_master_user_secret_arn` }}:password::" },
         { "name": "LITELLM_MASTER_KEY", "valueFrom": "{{ tfstate `output.master_key_secret_arn` }}" },
         { "name": "LITELLM_SALT_KEY", "valueFrom": "{{ tfstate `output.salt_key_secret_arn` }}" },
         { "name": "UI_PASSWORD", "valueFrom": "{{ tfstate `output.master_key_secret_arn` }}" }

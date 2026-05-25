@@ -22,6 +22,11 @@ resource "aws_db_instance" "this" {
   manage_master_user_password = true
   port                        = 5432
 
+  # ECS タスクは IAM database authentication でこの RDS に接続する。
+  # マスターユーザーは bootstrap (litellm_app ユーザー作成 + GRANT rds_iam) と
+  # 緊急時の break-glass 用途のみ。
+  iam_database_authentication_enabled = true
+
   db_subnet_group_name   = aws_db_subnet_group.this.name
   vpc_security_group_ids = [var.rds_security_group_id]
   publicly_accessible    = false

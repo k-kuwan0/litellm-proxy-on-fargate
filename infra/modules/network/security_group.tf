@@ -75,6 +75,16 @@ resource "aws_vpc_security_group_ingress_rule" "rds_from_service" {
   description                  = "PostgreSQL from ECS service"
 }
 
+# bastion からのDB接続を許可。bootstrap SQL 実行や緊急時の調査用途。
+resource "aws_vpc_security_group_ingress_rule" "rds_from_bastion" {
+  security_group_id            = aws_security_group.rds.id
+  referenced_security_group_id = aws_security_group.bastion.id
+  ip_protocol                  = "tcp"
+  from_port                    = 5432
+  to_port                      = 5432
+  description                  = "PostgreSQL from bastion"
+}
+
 resource "aws_vpc_security_group_ingress_rule" "endpoints_from_service" {
   security_group_id            = aws_security_group.endpoints.id
   referenced_security_group_id = aws_security_group.service.id
