@@ -2,6 +2,10 @@
 詳細はそちらをご覧ください。  
 [LiteLLM ProxyをECS Fargateにデプロイする構成をTerraform + ecspressoで組んでみた](https://dev.classmethod.jp/articles/litellm-proxy-on-fargate/)
 
+[LiteLLM の s3_use_team_prefix と s3_use_key_prefix の挙動を検証して Team と Key 命名の方針を考えてみた](https://dev.classmethod.jp/articles/litellm-s3-prefix-team-key/)
+
+[LiteLLM ProxyのRDSパスワード認証からIAM認証に切り替えてパスワードローテーションに強くしてみた](https://dev.classmethod.jp/articles/litellm-rds-iam-db-auth/)
+
 # litellm-proxy-on-fargate
 
 LiteLLM Proxy を ECS Fargate に乗せる構成のサンプル。LiteLLM 公式 / AWS Solutions Library のリファレンス実装をベースに、本番運用を想定したベストプラクティス（private VPC + VPC Endpoint / Secrets Manager / bastion 経由 SSM アクセス / ECS Exec / S3 リクエストログ / Bedrock 最小権限など）を反映している。Terraform で土台を作り、ecspresso で ECS Service / TaskDefinition のデプロイを回す。
